@@ -29,9 +29,10 @@ public class Folder :ITaggable
     public virtual IEnumerable<FolderShare> FolderShares { get; set; } = null!; //join entity
     public virtual IEnumerable<AppUser> Subscribers { get; set; } = null!;
     public virtual IEnumerable<FolderSubscription> FolderSubscriptions { get; set; } = null!; //join entity
-    public virtual Folder? ParentFolder { get; set; }
-    public Guid? ParentFolderId { get; set; }
-    public virtual IEnumerable<Folder> ChildFolders { get; set; } = null!;
+    public virtual Folder? Parent { get; set; }
+    public Guid? ParentId { get; set; }
+    [NotMapped]
+    public virtual IEnumerable<Folder> Children { get; set; } = null!;
     public virtual IEnumerable<Image> Images { get; set; } = null!;
     public virtual IEnumerable<FolderTag> Tags { get;} = null!;
     public virtual IEnumerable<FolderTagJoinModel> FoldersTags { get; set; } = null!;

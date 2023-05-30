@@ -6,11 +6,27 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace MediaZone.Util;
+namespace MediaZone.Common.ExtensionMethods;
 
 public static class ExtensionMethods
 {
-    public static string ToJson(this object obj) => obj.ToJson();
-    public static string ToShortGuid(this Guid guid) => Convert.ToBase64String(guid.ToByteArray());
-    
+    public static string ToJson(this object obj)
+    {
+        var settings = new JsonSerializerSettings
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        };
+        return JsonConvert.SerializeObject(obj,settings);
+        
+    }
+    public static string ToShortGuid(this Guid guid)
+    {
+        string base64String = Convert.ToBase64String(guid.ToByteArray());
+        base64String.Replace("/",null);
+        base64String.Replace("\\",null);
+        int indexOf = base64String.IndexOf("=");
+        
+        return (indexOf == -1) ? base64String : base64String[..indexOf];
+    }
+
 }

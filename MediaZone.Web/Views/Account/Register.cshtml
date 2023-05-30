@@ -8,12 +8,28 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form id="registerForm" asp-controller="Account" asp-action="Register" method="post">
+        <form id="registerForm" asp-controller="Account" asp-action="Register" onSubmit="ValidateHomeFolderName()" method="post">
             <h2>Create a new account.</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
-                <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                <input id="first-name-input" asp-for="FirstName" class="form-control" autocomplete="firstname" aria-required="true" />
+                <label asp-for="FirstName"></label>
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input id="last-name-input" asp-for="LastName" class="form-control" autocomplete="lastname" aria-required="true" />
+                <label asp-for="LastName"></label>
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input id="home-folder-input" asp-for="HomeFolderName" class="form-control" aria-required="true" />
+                <label asp-for="HomeFolderName"></label>
+                <span asp-validation-for="HomeFolderName" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input id="email-input" asp-for="Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                 <label asp-for="Email">Email</label>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
@@ -32,6 +48,16 @@
     </div>
 </div>
 
+<script>
+    function ValidateHomeFolderName() {
+        let homeFolderNameInput = document.getElementById("home-folder-input");
+        if (homeFolderNameInput.Value == null || homeFolderNameInput.Value == "") {
+            homeFolderNameInput.Value = document.getElementById("first-name-input").Value + " " + document.getElementById("last-name-input").Value + "'s Home Folder";
+            return false;
+        }
+        return true;
+    }
+</script>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

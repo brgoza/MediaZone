@@ -7,7 +7,7 @@ using MediaZone.Data;
 using MediaZone.Data.Entities;
 using MediaZone.Data.Entities.Identity;
 using MediaZone.Services.Interfaces;
-using MediaZone.Util;
+using MediaZone.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -26,35 +26,54 @@ public class FolderService : IFolderService
         _identityService = identityService;
     }
 
-    public Folder? GetFolder(Guid? id) => _dbContext.Folders.Find(id);
+    public Folder? GetFolder(Guid id) => _dbContext.Folders.Find(id);
+    public async Task<Folder?> GetFolderAsync(Guid id) =>await _dbContext.Folders.FindAsync(id);
+
+
     public IEnumerable<Folder> GetAncestors(Folder folder)
     {
         List<Folder> ancestors = new();
-        Folder? parent = folder.ParentFolder;
+        Folder? parent = folder.Parent;
         while (parent is not null)
         {
             ancestors.Add(parent);
-            parent = parent.ParentFolder;
+            parent = parent.Parent;
         }
         return ancestors;
     }
+
+    public async Task<Result> SetHomeFolder(AppUser user, Folder folder)
+    {
+        try
+        {
+            user.HomeFolder = folder;
+            await _dbContext.SaveChangesAsync();
+            return new(success: true, $"{user.FullName}'s home folder set to {folder.Name}");
+        }
+        catch (Exception ex)
+        {
+            return new(success:false, ex.Message);
+        }
+        
+    }
+
     public async Task<Result<Folder>> CreateFolder(string Name, AppUser owner, Folder? parent, bool? isPublic = false)
     {
         Folder newFolder = new()
         {
             Owner = owner,
             Name = Name,
-            ParentFolder = parent,
+            Parent = parent,
             IsPublic = isPublic,
             Subscribers = new List<AppUser>() { owner },
             AllowedUsers = new List<AppUser>() { owner }
-            
+
         };
-       
+
         try
         {
             _dbContext.Folders.Add(newFolder);
-             await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
             _logger.LogInformation("{userName} created new folder {folderName}", owner.UserName, newFolder.Name);
             return new(true, $"created new folder {newFolder.Name}", newFolder);
         }

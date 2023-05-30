@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MediaZone.Data\MediaZone.Data.csproj" />
-    <ProjectReference Include="..\MediaZone.Util\MediaZone.Util.csproj" />
+    <ProjectReference Include="..\MediaZone.Util\MediaZone.Common.csproj" />
   </ItemGroup>
 
 </Project>

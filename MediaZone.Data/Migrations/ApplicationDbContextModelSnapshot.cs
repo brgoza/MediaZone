@@ -81,14 +81,14 @@ namespace MediaZone.Data.Migrations
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ParentFolderId")
+                    b.Property<Guid?>("ParentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OwnerId");
 
-                    b.HasIndex("ParentFolderId");
+                    b.HasIndex("ParentId");
 
                     b.ToTable("Folders");
                 });
@@ -200,6 +200,8 @@ namespace MediaZone.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("HomeFolderId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -227,11 +229,17 @@ namespace MediaZone.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("OriginalFilename")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<long>("SizeInBytes")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -505,13 +513,13 @@ namespace MediaZone.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MediaZone.Data.Entities.Folder", "ParentFolder")
-                        .WithMany("ChildFolders")
-                        .HasForeignKey("ParentFolderId");
+                    b.HasOne("MediaZone.Data.Entities.Folder", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
 
                     b.Navigation("Owner");
 
-                    b.Navigation("ParentFolder");
+                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("MediaZone.Data.Entities.FolderSubscription", b =>
@@ -531,6 +539,17 @@ namespace MediaZone.Data.Migrations
                     b.Navigation("Folder");
 
                     b.Navigation("Subscriber");
+                });
+
+            modelBuilder.Entity("MediaZone.Data.Entities.Identity.AppUser", b =>
+                {
+                    b.HasOne("MediaZone.Data.Entities.Folder", "HomeFolder")
+                        .WithMany()
+                        .HasForeignKey("HomeFolderId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("HomeFolder");
                 });
 
             modelBuilder.Entity("MediaZone.Data.Entities.Image", b =>
@@ -686,7 +705,7 @@ namespace MediaZone.Data.Migrations
 
             modelBuilder.Entity("MediaZone.Data.Entities.Folder", b =>
                 {
-                    b.Navigation("ChildFolders");
+                    b.Navigation("Children");
 
                     b.Navigation("FolderShares");
 

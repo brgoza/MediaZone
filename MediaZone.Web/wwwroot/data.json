@@ -1,0 +1,16 @@
+{
+  "leaves": [
+    {
+      "leaf_id": 1,
+      "name": "Subscribed folder 1",
+      "no_leaves": 1
+    },
+    {
+      "leaf_id": 2,
+      "name": "folder 2",
+      "no_leaves": 0
+    }
+
+
+  ]
+}

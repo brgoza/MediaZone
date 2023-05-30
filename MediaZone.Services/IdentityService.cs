@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MediaZone.Data.Entities.Identity;
 using MediaZone.Services.Interfaces;
-using MediaZone.Util;
+using MediaZone.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;

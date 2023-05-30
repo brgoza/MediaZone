@@ -9,25 +9,29 @@ using System.Threading.Tasks;
 using MediaZone.Data.Entities.Identity;
 using MediaZone.Data.Entities.JoinEntities;
 using MediaZone.Data.Interfaces;
-using MediaZone.Util;
+using MediaZone.Common.ExtensionMethods;
+using Newtonsoft.Json;
 
 namespace MediaZone.Data.Entities;
 
 [Table("Images")]
 public class Image :ITaggable
 {
+    [JsonProperty("id")]
    public Guid Id { get; set; }
     [NotMapped] public string ShortId => Id.ToShortGuid();
     public virtual AppUser Owner { get; set; } = null!;
     public Guid OwnerId { get; set; }
 
 
+    [JsonProperty("imageUrl")]
     [Required]
     [DataType(DataType.ImageUrl)]
     public string ImageUrl { get; set; } = null!;
+    public string OriginalFilename { get; set; } = null!;
 
-    [Required, StringLength(255)]
-    public string Title { get; set; } = null!;
+    [StringLength(255)]
+    public string? Title { get; set; } = null!;
 
     public string? Description { get; set; }
 
@@ -39,6 +43,6 @@ public class Image :ITaggable
 
     public Guid FolderId { get; set; }
 
-
+    public long SizeInBytes { get; set; }
 
 }

@@ -1,0 +1,8 @@
+﻿@using MediaZone.Web.ViewModels.ViewComponentModels;
+@model FolderActionsViewModel
+
+        <form asp-action="Upload" asp-controller="ImagesApi" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="folderId" value="@Model.FolderId" />
+            <input class="mb-3" type="file" name="file" accept=".jpg, .jpeg, .png" />
+            <button type="submit">Upload</button>
+        </form>

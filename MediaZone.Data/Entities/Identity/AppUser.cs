@@ -11,8 +11,8 @@ namespace MediaZone.Data.Entities.Identity
         [NotMapped] public string FullName => $"{FirstName} {LastName}";
 
         public virtual IEnumerable<AppRole> Roles { get; set; } = null!;
-        [NotMapped]
-        public  Folder? HomeFolder { get; set; }
+        
+        public virtual Folder HomeFolder { get; set; } = null!;
         public Guid HomeFolderId { get; set; }
         public virtual IEnumerable<Folder> OwnedFolders { get; set; } = null!;
         public virtual IEnumerable<Folder> SubscribedFolders { get; set; } = null!;

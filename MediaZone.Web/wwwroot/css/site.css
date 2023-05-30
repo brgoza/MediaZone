@@ -18,5 +18,30 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-image: url("/image/background-02.png");
+    background-repeat: repeat;
+}
+
+smart-tree{
+    width:80%;
+    max-height: 100%;
+    z-index: 3;
+}
+
+.main-container {
+    background-image: url("/image/background-01.png");
+    background-repeat: repeat;
+    padding: 25px;
+    /*border-image-slice: 13 13 13 13 fill;
+    border-image-width: 9px 9px 9px 9px;
+    border-image-outset: 13px 13px 13px 13px;
+    border-image-repeat: repeat repeat;
+    border-image-source: url("https://mdn.github.io/css-examples/tools/border-image-generator/border-image-4.png");*/
+    border-style: solid;
+    box-shadow: -5px 0px 10px 5px rgba(0, 0, 0, 1), 5px 5px 10px 5px rgba(0, 0, 0, 1);
+}
+
+.folder-contents{
+    color:aliceblue;
 }

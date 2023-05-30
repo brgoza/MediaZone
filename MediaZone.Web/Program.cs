@@ -65,6 +65,7 @@ namespace MediaZone.Web
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
+                app.UseDeveloperExceptionPage();
             }
             else
             {
@@ -83,6 +84,7 @@ namespace MediaZone.Web
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
+            
             app.Run();
         }
     }

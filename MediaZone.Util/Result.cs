@@ -1,4 +1,4 @@
-﻿namespace MediaZone.Util;
+﻿namespace MediaZone.Common;
 
 public class Result
 {

@@ -1,9 +1,40 @@
-﻿@model MediaZone.Web.ViewComponents.FolderContentsViewModel
+﻿@using MediaZone.Web.ViewModels.ViewComponentModels;
+@model FolderContentsViewModel;
 
 <div class="container">
-<div class="row">
-    <div class="col">
-        @Model.FolderName - @Model.FolderId (@Model.OwnerName)
+    <div class="row">
+       @* <div class="col">
+            @if (Model is not null)
+            {
+                <p>@Model.Folder.Name</p>
+                <p>@Model.OwnerName</p>
+            }
+            else
+            {
+                <p>No folder selected</p>
+            }
+        </div>*@
+
+
     </div>
-</div>
+    <div class="row">
+        <div class="gallery">
+            <div class="gallery__bg"><img src="#" /></div>
+           
+            <div class="gallery__main">
+                <div class="gallery__core"><img src="#" /></div>
+                <div class="gallery__track"></div>
+            </div>
+            <div class="gallery__search">
+                <label>Show me pictures of</label>
+                <input type="text" value="mountains" />
+            </div>
+    
+
+    </div>
+    <div class="row">
+        <div class="col">
+            <input id="upload-input" type="file" class="file" multiple=true>
+        </div>
+    </div>
 </div>

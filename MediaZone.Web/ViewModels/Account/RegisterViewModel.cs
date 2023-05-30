@@ -29,5 +29,8 @@ public class RegisterViewModel
     [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
     public string ConfirmPassword { get; set; } = string.Empty;
 
-
+    [Required]
+    [StringLength(255)]
+    [Display(Name = "Home folder name")]
+    public string HomeFolderName { get; set; } = string.Empty;
 }

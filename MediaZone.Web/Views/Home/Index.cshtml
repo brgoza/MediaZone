@@ -1,8 +1,22 @@
 ﻿@model HomeIndexViewModel
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Dashboard";
 }
 
-<p>Hi, @Model.CurrentUser.UserName</p>
-@Html.ActionLink("Create new folder","CreateFolder","Home",null,new{@class="btn btn-primary"})
-<vc:folder-contents folder-id = @Model/>
+<div id="active-folder-id" value=""></div>
+
+<div class="container main-container" style="width:90%">
+    <div class="row">
+        <div class="col-4">
+            <div>
+                @await Component.InvokeAsync("FolderNav", new { folderId = Model.CurrentFolderId })
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="folder-contents" id="folder-contents">
+            </div>
+        </div>
+    </div>
+
+</div>
+

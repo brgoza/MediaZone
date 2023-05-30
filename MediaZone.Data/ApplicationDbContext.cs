@@ -43,16 +43,18 @@ namespace MediaZone.Data
             builder.Entity<SubjectTagJoinModel>()
                 .HasKey(k => new { k.SubjectId, k.TagId });
 
-           
-                
-            
-                
+
+
+
+
             builder.Entity<AppUser>()
                 .HasMany(u => u.OwnedFolders)
                 .WithOne(f => f.Owner)
                 .HasForeignKey(f => f.OwnerId);
 
-           
+            builder.Entity<AppUser>().HasOne(u => u.HomeFolder).WithMany().HasForeignKey(u => u.HomeFolderId)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
             builder.Entity<Folder>()
               .HasMany(folder => folder.Subscribers)
@@ -63,15 +65,15 @@ namespace MediaZone.Data
                 .WithMany(user => user.AllowedFolders)
                 .UsingEntity<FolderShare>();
             builder.Entity<Folder>()
-             .HasMany(folder => folder.ChildFolders)
-             .WithOne(child => child.ParentFolder)
-             .HasForeignKey(child => child.ParentFolderId);
+             .HasMany(folder => folder.Children)
+             .WithOne(child => child.Parent)
+             .HasForeignKey(child => child.ParentId);
             //builder.Entity<Folder>()
             //   .HasMany(ft => ft.Tags)
             //   .WithMany(t => (IEnumerable<Folder>)t.Subjects)
             //   .UsingEntity<SubjectTag>();
 
-            
+
 
 
             builder.Entity<Image>()
@@ -122,8 +124,8 @@ namespace MediaZone.Data
                 .WithMany(t => t.Tags)
                 .UsingEntity<ImageTagJoinModel>();
             builder.Entity<FolderTag>()
-                .HasMany(t=>t.Folders)
-                .WithMany(t=>t.Tags)
+                .HasMany(t => t.Folders)
+                .WithMany(t => t.Tags)
                 .UsingEntity<FolderTagJoinModel>();
 
 
