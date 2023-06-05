@@ -18,6 +18,7 @@ html {
 }
 
 body {
+    color: aliceblue;
     margin-bottom: 60px;
     background-image: url("/image/background-02.png");
     background-repeat: repeat;
